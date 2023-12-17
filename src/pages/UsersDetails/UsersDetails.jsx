@@ -10,11 +10,11 @@ const UsersDetails = () => {
   const user = useSelector(selectUsers).find((u) => u.id === parseInt(params.id));
   const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
-  const path = useSelector(selectPath); // Новое: получаем path из Redux
+  const path = useSelector(selectPath); 
   const navigate = useNavigate();
 
   const onBack = () => {
-    dispatch(setPath("UsersDetails")); // Новое: устанавливаем path при возврате
+    dispatch(setPath("UsersDetails")); 
     navigate(-1);
   };
 
@@ -25,7 +25,7 @@ const UsersDetails = () => {
       fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`)
         .then((res) => res.json())
         .then((data) => {
-          dispatch(setUsers([data])); // Обновим только выбранного пользователя
+          dispatch(setUsers([data])); 
           dispatch(setError(""));
         })
         .catch((err) => {
@@ -59,4 +59,4 @@ const UsersDetails = () => {
 };
 
 export default UsersDetails;
-// import { setUsers, setLoading, setError, setPath, selectUsers, selectLoading, selectError, selectPath } from "../../store/Slices/UsersSlice";
+

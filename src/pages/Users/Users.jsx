@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUsers, setLoading, setError, setPath, selectUsers, selectLoading, selectError, selectPath } from "../../store/Slices/UsersSlice";
+import {  selectUsers, selectLoading, selectError, selectPath } from "../../store/Slices/UsersSlice";
 import { useNavigate } from "react-router-dom";
 import classes from "./style.module.css";
 import { Link } from "react-router-dom";
+import fetchAllUsers from "../../store/Reducers/UsersCreators";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -13,22 +14,28 @@ const Users = () => {
   const path = useSelector(selectPath);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(setLoading(true));
+  // useEffect(() => {
+  //   dispatch(setLoading(true));
 
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(setUsers(data));
-        dispatch(setError(""));
-        dispatch(setPath(path));
-      })
-      .catch((err) => {
-        dispatch(setError(err.message));
-        dispatch(setUsers([]));
-      })
-      .finally(() => dispatch(setLoading(false)));
-  }, [dispatch, path]);
+  //   fetch("https://jsonplaceholder.typicode.com/users")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       dispatch(setUsers(data));
+  //       dispatch(setError(""));
+  //       dispatch(setPath(path));
+  //     })
+  //     .catch((err) => {
+  //       dispatch(setError(err.message));
+  //       dispatch(setUsers([]));
+  //     })
+  //     .finally(() => dispatch(setLoading(false)));
+  // }, [dispatch, path]);
+
+
+  useEffect(() =>{
+    dispatch(fetchAllUsers())
+  },[])
+
   function getshortvalue(value,id) {
     if(value.length>20){
       return (

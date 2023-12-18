@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import fetchAllUsers from "../Reducers/UsersCreators";
 
 const usersSlice = createSlice({
   name: "users",
@@ -21,8 +22,23 @@ const usersSlice = createSlice({
     setPath: (state, action) => {
       state.path = action.payload;
     },
-  },
+  }, 
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllUsers.pending, (state, action) => {
+      state.isLoading = action.payload;
+    })
+
+    builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
+      state.data = action.payload;
+    })
+
+    builder.addCase(fetchAllUsers.rejected, (state, action) => {
+      state.error = action.payload;
+    })
+}
 });
+
 
 export const { setUsers, setLoading, setError, setPath } = usersSlice.actions;
 export const selectUsers = (state) => state.users.data;

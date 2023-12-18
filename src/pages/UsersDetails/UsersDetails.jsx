@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { setUsers, setLoading, setError, setPath, selectUsers, selectLoading, selectError, selectPath } from "../../store/Slices/UsersSlice";
 import classes from "./UsersDetails.module.css";
+import fetchAllUsers from "../../store/Reducers/UsersCreators";
+
 
 const UsersDetails = () => {
   const dispatch = useDispatch();
@@ -18,23 +20,28 @@ const UsersDetails = () => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    if (!user) {
-      dispatch(setLoading(true));
+  // useEffect(() => {
+  //   if (!user) {
+  //     dispatch(setLoading(true));
 
-      fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          dispatch(setUsers([data])); 
-          dispatch(setError(""));
-        })
-        .catch((err) => {
-          dispatch(setError(err.message));
-          dispatch(setUsers([]));
-        })
-        .finally(() => dispatch(setLoading(false)));
-    }
-  }, [dispatch, params.id, user]);
+  //     fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         dispatch(setUsers([data])); 
+  //         dispatch(setError(""));
+  //       })
+  //       .catch((err) => {
+  //         dispatch(setError(err.message));
+  //         dispatch(setUsers([]));
+  //       })
+  //       .finally(() => dispatch(setLoading(false)));
+  //   }
+  // }, [dispatch, params.id, user]);
+
+  useEffect(() =>{
+    dispatch(fetchAllUsers())
+  },[])
+
 
   return (
     <div className={classes.post}>
